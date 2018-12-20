@@ -1,14 +1,19 @@
-
-
+from tkinter import*
+from random import*
 
 class celula(object):
 	
-	def __init__(self , stare , x , y ) :
+	def __init__(self , stare , x , y , root ) :
 		
 		self.srate = stare
 		self.next_gen = stare 
 		self.x = x
 		self.y = y
+
+		t_celula = Label( root , text = str(stare) )
+
+		#t_celula.grid( row = x + 1 , column = y )
+		t_celula.pack()
 
 	def set_stare( self , stare ) : 
 
@@ -55,14 +60,20 @@ class tabel(object):
 		self.nr_x = nr_x
 		self.nr_y = nr_y
 
+		root = Tk()
+
+		b_next_gen = Button( root , text = "next gen" )
+		b_next_gen.grid( row = 0 , column = 0 )
+
 		matrice_celule = []
 
 		for i in range( self.nr_x - 1 ) :
 
 			for j in range( self.nr_y - 1 ) :
 
-				matrice_celule.append( celula( randint( 0 , 2 ) , i , j ) )
+				matrice_celule.append( celula( randint( 0 , 2 ) , i , j , root ) )
 
+		root.mainloop()
 
 
 	def set_celula( self , x , y , stare ) :
@@ -80,6 +91,7 @@ class tabel(object):
 			vecini = vecini + 1
 
 		if ( x - 1 ) * self.nr_y + y + 1 >= 0 and ( x - 1 ) * self.nr_y + y + 1 <= nr_x * self.nr_y and matrice_celule[ ( x - 1 ) * self.nr_y + y + 1 ].get_stare == 1 : # dreapta sus
+			vecini = vecini + 1
 
 		if x * self.nr_y + y - 1 >= 0 and x * self.nr_y + y - 1 <= nr_x * self.nr_y and matrice_celule[ x * self.nr_y + y - 1 ].get_stare == 1 : # stanga
 			vecini = vecini + 1
@@ -98,7 +110,7 @@ class tabel(object):
 
 		if matrice_celule[ x * self.nr_y + y ].get_stare == 1 : 
 
-			if vecini > 3 && vecini < 2 : 
+			if vecini > 3 and vecini < 2 : 
 
 				matrice_celule[ x * self.nr_y + y ].set_next_gen( 0 )
 
@@ -109,9 +121,9 @@ class tabel(object):
 				matrice_celule[ x * self.nr_y + y ].set_next_gen( 1 )
 
 		
+# start ------------------------------------------------------------------------------- start ----------------
 
-
-
+a = tabel( 2 , 2 )
 
 
 
