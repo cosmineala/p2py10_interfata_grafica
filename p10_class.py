@@ -1,25 +1,26 @@
 from tkinter import*
 from random import*
+from PIL import ImageTk, Image
 
 class celula(object):
 	
 	def __init__(self , stare , x , y , root ) :
 		
-		self.srate = stare
+		self.stare = stare
 		self.next_gen = stare 
 		self.x = x
 		self.y = y
 
 		t_celula = Label( root , text = str(stare) )
 
-		#t_celula.grid( row = x + 1 , column = y )
-		t_celula.pack()
+		t_celula.grid( row = x + 1 , column = y )
 
 	def set_stare( self , stare ) : 
 
 		self.stare = stare
 
-	def get_stare():
+
+	def get_stare( self ):
 		
 		return self.stare
 
@@ -55,25 +56,30 @@ class celula(object):
 
 class tabel(object):
 	
-	def __init__( self , nr_x , nr_y ) :
+	def __init__( self , root , nr_x , nr_y ) :
+
+		self.root = root
 
 		self.nr_x = nr_x
 		self.nr_y = nr_y
 
-		root = Tk()
+		frame_com = Frame( root )
+		frame_com.pack(  )
 
-		b_next_gen = Button( root , text = "next gen" )
-		b_next_gen.grid( row = 0 , column = 0 )
+		frame_ma = Frame( root )
+		frame_ma.pack( side = BOTTOM )
+
+		b_next_gen = Button( frame_com , text = "next gen" )
+		b_next_gen.grid()
 
 		matrice_celule = []
 
-		for i in range( self.nr_x - 1 ) :
+		for i in range( self.nr_x ) :
 
-			for j in range( self.nr_y - 1 ) :
+			for j in range( self.nr_y ) :
 
-				matrice_celule.append( celula( randint( 0 , 2 ) , i , j , root ) )
+				matrice_celule.append( celula( randint( 0 , 1 ) , i , j , frame_ma ) )
 
-		root.mainloop()
 
 
 	def set_celula( self , x , y , stare ) :
@@ -123,7 +129,14 @@ class tabel(object):
 		
 # start ------------------------------------------------------------------------------- start ----------------
 
-a = tabel( 2 , 2 )
+root = Tk()
+
+root.geometry( "400x400" )
+
+a = tabel( root , 4 , 4 )
+
+root.mainloop()
+
 
 
 
