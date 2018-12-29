@@ -1,6 +1,6 @@
 from tkinter import*
 from random import*
-from PIL import ImageTk, Image
+from PIL import*
 
 class celula(object):
 	
@@ -63,77 +63,104 @@ class tabel(object):
 		self.nr_x = nr_x
 		self.nr_y = nr_y
 
-		frame_com = Frame( root )
-		frame_com.pack(  )
+		self.nr_gen = 0
 
-		frame_ma = Frame( root )
-		frame_ma.pack( side = BOTTOM )
+		self.frame_com = Frame( root )
+		self.frame_com.pack(  )
 
-		b_next_gen = Button( frame_com , text = "next gen" )
-		b_next_gen.grid()
+		self.frame_ma = Frame( root )
+		self.frame_ma.pack( side = BOTTOM )
 
-		matrice_celule = []
+		self.b_next_gen = Button( self.frame_com , text = "next gen" )
+		self.b_next_gen.grid()
+		self.b_next_gen["command"] = self.run_next_gen()
+
+		self.matrice_celule = []
 
 		for i in range( self.nr_x ) :
 
 			for j in range( self.nr_y ) :
 
-				matrice_celule.append( celula( randint( 0 , 1 ) , i , j , frame_ma ) )
+				self.matrice_celule.append( celula( randint( 0 , 1 ) , i , j , self.frame_ma ) )
 
 
 
 	def set_celula( self , x , y , stare ) :
 
-		matrice_celule[ x * self.nr_y + y ].set_stare = stare
+		self.matrice_celule[ x * self.nr_y + y ].set_stare = stare
+
+	def get_nr_gen( self ) :
+
+		return self.nr_gen
 
 	def next_gen( self , x , y ) :
 
 		vecini = 0
 
-		if ( x - 1 ) * self.nr_y + y - 1 >= 0 and ( x - 1 ) * self.nr_y + y - 1 <= nr_x * self.nr_y and matrice_celule[ ( x - 1 ) * self.nr_y + y - 1 ].get_stare == 1 : # stanga sus
+		if ( x - 1 ) * self.nr_y + y - 1 >= 0 and ( x - 1 ) * self.nr_y + y - 1 < self.nr_x * self.nr_y and self.matrice_celule[ ( x - 1 ) * self.nr_y + y - 1 ].get_stare == 1 : # stanga sus
 			vecini = vecini + 1
 
-		if ( x - 1 ) * self.nr_y + y >= 0 and ( x - 1 ) * self.nr_y + y <= nr_x * self.nr_y and matrice_celule[ ( x - 1 ) * self.nr_y + y ].get_stare == 1 : # sus
+		if ( x - 1 ) * self.nr_y + y >= 0 and ( x - 1 ) * self.nr_y + y < self.nr_x * self.nr_y and self.matrice_celule[ ( x - 1 ) * self.nr_y + y ].get_stare == 1 : # sus
 			vecini = vecini + 1
 
-		if ( x - 1 ) * self.nr_y + y + 1 >= 0 and ( x - 1 ) * self.nr_y + y + 1 <= nr_x * self.nr_y and matrice_celule[ ( x - 1 ) * self.nr_y + y + 1 ].get_stare == 1 : # dreapta sus
+		if ( x - 1 ) * self.nr_y + y + 1 >= 0 and ( x - 1 ) * self.nr_y + y + 1 < self.nr_x * self.nr_y and self.matrice_celule[ ( x - 1 ) * self.nr_y + y + 1 ].get_stare == 1 : # dreapta sus
 			vecini = vecini + 1
 
-		if x * self.nr_y + y - 1 >= 0 and x * self.nr_y + y - 1 <= nr_x * self.nr_y and matrice_celule[ x * self.nr_y + y - 1 ].get_stare == 1 : # stanga
+		if x * self.nr_y + y - 1 >= 0 and x * self.nr_y + y - 1 < self.nr_x * self.nr_y and self.matrice_celule[ x * self.nr_y + y - 1 ].get_stare == 1 : # stanga
 			vecini = vecini + 1
 
-		if x * self.nr_y + y + 1 >= 0 and x * self.nr_y + y + 1 <= nr_x * self.nr_y and matrice_celule[ x * self.nr_y + y + 1 ].get_stare == 1 : # dreapta
+		if x * self.nr_y + y + 1 >= 0 and x * self.nr_y + y + 1 < self.nr_x * self.nr_y and self.matrice_celule[ x * self.nr_y + y + 1 ].get_stare == 1 : # dreapta
 			vecini = vecini + 1
 
-		if ( x + 1 ) * self.nr_y + y - 1 >= 0 and ( x + 1 ) * self.nr_y + y - 1 <= nr_x * self.nr_y and matrice_celule[ ( x + 1 ) * self.nr_y + y - 1 ].get_stare == 1 : # stanga jos
+		if ( x + 1 ) * self.nr_y + y - 1 >= 0 and ( x + 1 ) * self.nr_y + y - 1 < self.nr_x * self.nr_y and self.matrice_celule[ ( x + 1 ) * self.nr_y + y - 1 ].get_stare == 1 : # stanga jos
 			vecini = vecini + 1
 
-		if ( x + 1 ) * self.nr_y + y >= 0 and ( x + 1 ) * self.nr_y + y <= nr_x * self.nr_y and matrice_celule[ ( x + 1 ) * self.nr_y + y ].get_stare == 1 : # jos 
+		if ( x + 1 ) * self.nr_y + y >= 0 and ( x + 1 ) * self.nr_y + y < self.nr_x * self.nr_y and self.matrice_celule[ ( x + 1 ) * self.nr_y + y ].get_stare == 1 : # jos 
 			vecini = vecini + 1
 
-		if ( x + 1 ) * self.nr_y + y + 1 >= 0 and ( x + 1 ) * self.nr_y + y + 1 <= nr_x * self.nr_y and matrice_celule[ ( x + 1 ) * self.nr_y + y + 1 ].get_stare == 1 : # deapata jos
+		if ( x + 1 ) * self.nr_y + y + 1 >= 0 and ( x + 1 ) * self.nr_y + y + 1 < self.nr_x * self.nr_y  and self.matrice_celule[ ( x + 1 ) * self.nr_y + y + 1 ].get_stare == 1 : # deapata jos
 			vecini = vecini + 1
 
-		if matrice_celule[ x * self.nr_y + y ].get_stare == 1 : 
+		if self.matrice_celule[ x * self.nr_y + y ].get_stare == 1 : 
 
 			if vecini > 3 and vecini < 2 : 
 
-				matrice_celule[ x * self.nr_y + y ].set_next_gen( 0 )
+				self.matrice_celule[ x * self.nr_y + y ].set_next_gen( 0 )
 
 		else : 
 
 			if vecini == 3 :
 
-				matrice_celule[ x * self.nr_y + y ].set_next_gen( 1 )
+				self.matrice_celule[ x * self.nr_y + y ].set_next_gen( 1 )
+
+
+	def run_next_gen( self ) :
+
+		self.nr_gen += 1
+
+		for i in range( self.nr_x ) :
+
+			for j in range( self.nr_y ) :
+
+				self.next_gen( i , j )
+
+
 
 		
 # start ------------------------------------------------------------------------------- start ----------------
 
+a = 25
+
+b = 25
+
+dim = str( a * 16 + 30 ) + "x" + str( b * 20 + 30 )
+
 root = Tk()
 
-root.geometry( "400x400" )
+a = tabel( root , a , b )
 
-a = tabel( root , 4 , 4 )
+root.title( "generatia " + str( a.get_nr_gen() ) )
+root.geometry( dim )
 
 root.mainloop()
 
