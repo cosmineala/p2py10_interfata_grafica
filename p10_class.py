@@ -58,6 +58,8 @@ class tabel(object):
 	
 	def __init__( self , root , nr_x , nr_y ) :
 
+		self.matrice_celule = []
+
 		self.root = root
 
 		self.nr_x = nr_x
@@ -75,13 +77,13 @@ class tabel(object):
 		self.b_next_gen.grid()
 		self.b_next_gen["command"] = self.run_next_gen()
 
-		self.matrice_celule = []
-
 		for i in range( self.nr_x ) :
 
 			for j in range( self.nr_y ) :
 
 				self.matrice_celule.append( celula( randint( 0 , 1 ) , i , j , self.frame_ma ) )
+
+				#print( str( i ) + "<- i | j->" + str( j ) + "\n" )
 
 
 
@@ -97,29 +99,37 @@ class tabel(object):
 
 		vecini = 0
 
-		if ( x - 1 ) * self.nr_y + y - 1 >= 0 and ( x - 1 ) * self.nr_y + y - 1 < self.nr_x * self.nr_y and self.matrice_celule[ ( x - 1 ) * self.nr_y + y - 1 ].get_stare == 1 : # stanga sus
-			vecini = vecini + 1
+		if ( x - 1 ) * self.nr_y + y - 1 >= 0 and ( x - 1 ) * self.nr_y + y - 1 < self.nr_x * self.nr_y : # stanga sus
+			if self.matrice_celule[ ( x - 1 ) * self.nr_y + y - 1 ].get_stare == 1 : 
+				vecini += 1
 
-		if ( x - 1 ) * self.nr_y + y >= 0 and ( x - 1 ) * self.nr_y + y < self.nr_x * self.nr_y and self.matrice_celule[ ( x - 1 ) * self.nr_y + y ].get_stare == 1 : # sus
-			vecini = vecini + 1
+		if ( x - 1 ) * self.nr_y + y >= 0 and ( x - 1 ) * self.nr_y + y < self.nr_x * self.nr_y : # sus
+			if self.matrice_celule[ ( x - 1 ) * self.nr_y + y ].get_stare == 1 :
+				vecini += 1
 
-		if ( x - 1 ) * self.nr_y + y + 1 >= 0 and ( x - 1 ) * self.nr_y + y + 1 < self.nr_x * self.nr_y and self.matrice_celule[ ( x - 1 ) * self.nr_y + y + 1 ].get_stare == 1 : # dreapta sus
-			vecini = vecini + 1
+		if ( x - 1 ) * self.nr_y + y + 1 >= 0 and ( x - 1 ) * self.nr_y + y + 1 < self.nr_x * self.nr_y : # dreapta sus
+			if self.matrice_celule[ ( x - 1 ) * self.nr_y + y + 1 ].get_stare == 1 : 
+				vecini += 1
 
-		if x * self.nr_y + y - 1 >= 0 and x * self.nr_y + y - 1 < self.nr_x * self.nr_y and self.matrice_celule[ x * self.nr_y + y - 1 ].get_stare == 1 : # stanga
-			vecini = vecini + 1
+		if x * self.nr_y + y - 1 >= 0 and x * self.nr_y + y - 1 < self.nr_x * self.nr_y : # stanga
+			if self.matrice_celule[ x * self.nr_y + y - 1 ].get_stare == 1 : 
+				vecini += 1
 
-		if x * self.nr_y + y + 1 >= 0 and x * self.nr_y + y + 1 < self.nr_x * self.nr_y and self.matrice_celule[ x * self.nr_y + y + 1 ].get_stare == 1 : # dreapta
-			vecini = vecini + 1
+		if x * self.nr_y + y + 1 >= 0 and x * self.nr_y + y + 1 < self.nr_x * self.nr_y : # dreapta
+			if self.matrice_celule[ x * self.nr_y + y + 1 ].get_stare == 1 : 
+				vecini += 1
 
-		if ( x + 1 ) * self.nr_y + y - 1 >= 0 and ( x + 1 ) * self.nr_y + y - 1 < self.nr_x * self.nr_y and self.matrice_celule[ ( x + 1 ) * self.nr_y + y - 1 ].get_stare == 1 : # stanga jos
-			vecini = vecini + 1
+		if ( x + 1 ) * self.nr_y + y - 1 >= 0 and ( x + 1 ) * self.nr_y + y - 1 < self.nr_x * self.nr_y : # stanga jos
+			if self.matrice_celule[ ( x + 1 ) * self.nr_y + y - 1 ].get_stare == 1 : 
+				vecini += 1
 
-		if ( x + 1 ) * self.nr_y + y >= 0 and ( x + 1 ) * self.nr_y + y < self.nr_x * self.nr_y and self.matrice_celule[ ( x + 1 ) * self.nr_y + y ].get_stare == 1 : # jos 
-			vecini = vecini + 1
+		if ( x + 1 ) * self.nr_y + y >= 0 and ( x + 1 ) * self.nr_y + y < self.nr_x * self.nr_y : # jos
+			if self.matrice_celule[ ( x + 1 ) * self.nr_y + y ].get_stare == 1 :  
+				vecini += 1
 
-		if ( x + 1 ) * self.nr_y + y + 1 >= 0 and ( x + 1 ) * self.nr_y + y + 1 < self.nr_x * self.nr_y  and self.matrice_celule[ ( x + 1 ) * self.nr_y + y + 1 ].get_stare == 1 : # deapata jos
-			vecini = vecini + 1
+		if ( x + 1 ) * self.nr_y + y + 1 >= 0 and ( x + 1 ) * self.nr_y + y + 1 < self.nr_x * self.nr_y : # deapata jos
+			if self.matrice_celule[ ( x + 1 ) * self.nr_y + y + 1 ].get_stare == 1 : 
+				vecini += 1
 
 		if self.matrice_celule[ x * self.nr_y + y ].get_stare == 1 : 
 
@@ -149,17 +159,17 @@ class tabel(object):
 		
 # start ------------------------------------------------------------------------------- start ----------------
 
-a = 25
+a = 10 # randuri
 
-b = 25
+b = 15 # coloane
 
-dim = str( a * 16 + 30 ) + "x" + str( b * 20 + 30 )
+dim = str( b * 15 + 25 ) + "x" + str( a * 22 + 30 )
 
 root = Tk()
 
-a = tabel( root , a , b )
+tab1 = tabel( root , a , b )
 
-root.title( "generatia " + str( a.get_nr_gen() ) )
+root.title( "generatia " + str( tab1.get_nr_gen() ) )
 root.geometry( dim )
 
 root.mainloop()
