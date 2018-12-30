@@ -11,7 +11,7 @@ class celula(object):
 		self.x = x
 		self.y = y
 
-		t_celula = Label( root , text = str(stare) )
+		t_celula = Label( root , image = self.get_poza() )
 
 		t_celula.grid( row = x + 1 , column = y )
 
@@ -19,8 +19,17 @@ class celula(object):
 
 		self.stare = stare
 
+	def get_poza( self ) :
 
-	def get_stare( self ):
+		photo1 = PhotoImage(file='c1.gif')
+		photo0 = PhotoImage(file='c0.gif')
+
+		if self.stare == 1 :
+			return photo1
+		else :
+			return photo0
+
+	def get_stare( self ) :
 		
 		return self.stare
 
@@ -67,23 +76,18 @@ class tabel(object):
 
 		self.nr_gen = 0
 
-		self.frame_com = Frame( root )
-		self.frame_com.pack(  )
+		self.b_next_gen = Button( self.root , text = "next gen" )
+		self.b_next_gen.grid( row = self.nr_x + 1 )
 
-		self.frame_ma = Frame( root )
-		self.frame_ma.pack( side = BOTTOM )
-
-		self.b_next_gen = Button( self.frame_com , text = "next gen" )
-		self.b_next_gen.grid()
-		self.b_next_gen["command"] = self.run_next_gen()
+		#self.b_next_gen["command"] = self.run_next_gen()    <-  se adauga linia dupa tezolvare bug mem mat
 
 		for i in range( self.nr_x ) :
 
 			for j in range( self.nr_y ) :
 
-				self.matrice_celule.append( celula( randint( 0 , 1 ) , i , j , self.frame_ma ) )
+				self.matrice_celule.append( celula( randint( 0 , 1 ) , i , j , self.root ) )
 
-				#print( str( i ) + "<- i | j->" + str( j ) + "\n" )
+				print( str( i ) + "<- i | j->" + str( j ) + "\n" )
 
 
 
@@ -159,11 +163,11 @@ class tabel(object):
 		
 # start ------------------------------------------------------------------------------- start ----------------
 
-a = 10 # randuri
+a = 2 # randuri
 
-b = 15 # coloane
+b = 3 # coloane
 
-dim = str( b * 15 + 25 ) + "x" + str( a * 22 + 30 )
+dim = str( b * 50 + 25 ) + "x" + str( a * 60 + 30 )
 
 root = Tk()
 
