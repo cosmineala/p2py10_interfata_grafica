@@ -1,22 +1,12 @@
+
+# GitHub : https://github.com/cosmineala/p2py10_interfata_grafica
+
 from tkinter import*
 from random import*
-from PIL import*
-
-'''class proba(object):
-
-	def __init__( self , num ) :
-
-		self.num = num
-
-	def get_num( self ) :
-
-		return self.num
-
-	def get_stare()( self ) :
-
-		print(" 1 ")'''
 
 
+
+#--------------------------------------------------------------------------------CELULA---START-----------------------------------
 
 class celula(object):
 	
@@ -33,9 +23,11 @@ class celula(object):
 
 		self.t_celula.grid( row = x + 1 , column = y )
 
+
 	def set_stare( self , stare ) : 
 
 		self.stare = stare
+
 
 	def get_poza( self ) :
 
@@ -44,9 +36,11 @@ class celula(object):
 		else :
 			return self.photo0
 
+
 	def get_stare( self ) :
 		
 		return self.stare
+
 
 	def set_next_gen( self , next_gen ) :
 
@@ -54,9 +48,11 @@ class celula(object):
 
 		self.next_gen = next_gen
 
+
 	def get_next_gen( self ) :
 
 		return self.next_gen
+
 
 	def c_next_gen( self ) :
 
@@ -71,26 +67,33 @@ class celula(object):
 		self.t_celula.grid( row = self.x + 1 , column = self.y )
 
 
-
-
-
 	def set_x( self , x ) :
 
 		self.x = x 
+
 
 	def get_x( self ) :
 
 		return self.x
 
+
 	def set_y( self , y ) :
 
 		self.y = y
+
 
 	def get_y( self ) :
 
 		return self.y
 
-#------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------CELULA---END---------------------------------------------------
+
+
+
+
+
+
+#------------------------------------------------------------------------------TABEL---START---------------------------------------------------
 
 class tabel(object):
 	
@@ -120,12 +123,7 @@ class tabel(object):
 
 				self.matrice_celule.append( celula( randint( 0 , 1 ) , i , j , self.zona_top ) )
 
-		#self.b_next_gen["command"] = self.run_next_gen 
-
-				#print( str( i ) + "<- i | j->" + str( j ) + "\n" )  <- printeaza i si j
-		'''for i in range( 100000000 ) :
-
-			self.matrice_celule.append( proba( i ) )'''
+		self.b_next_gen["command"] = self.run_next_gen 
 
 
 
@@ -133,13 +131,18 @@ class tabel(object):
 
 		self.matrice_celule[ nr_in_lista( x , y ) ].set_stare = stare
 
+
 	def get_nr_gen( self ) :
 
 		return self.nr_gen
 
+
 	def run_next_gen( self ) :
 
 		self.nr_gen += 1
+
+		root.title( "generatia " + str( self.get_nr_gen() ) )
+
 		print ("da_run_next_gen")
 
 		for i in range( self.nr_randuri ) :
@@ -153,7 +156,6 @@ class tabel(object):
 			for j in range( self.nr_coloane ) :
 
 				self.matrice_celule[ self.nr_in_lista( i , j ) ].c_next_gen()
-
 
 
 	def next_gen( self , x , y ) :
@@ -181,6 +183,7 @@ class tabel(object):
 	def nr_in_lista( self , x , y ) : 
 
 	 	return	x * self.nr_coloane + y
+
 
 	def nr_vecini( self , x , y ) :
 
@@ -221,18 +224,18 @@ class tabel(object):
 
 		return vecini
 
-
+#-------------------------------------------------------------------------------------TABEL---END---------------------------------
 
 
 
 
 
 		
-# start ------------------------------------------------------------------------------- start ----------------
+# start ------------------------------------------------------------------------------- start ------------------------------------
 
 a = 10 # randuri
 
-b = 15 # coloane
+b = 10 # coloane
 
 dim = str( b * 55 + 25 ) + "x" + str( a * 55 + 30 )
 
@@ -240,10 +243,9 @@ root = Tk()
 
 tab1 = tabel( root , a , b )
 
-root.title( "generatia " + str( tab1.get_nr_gen() ) )
-root.geometry( dim )
+root.title( "generatia 0")
 
-tab1.b_next_gen["command"] = tab1.run_next_gen
+root.geometry( dim )
 
 root.mainloop()
 
