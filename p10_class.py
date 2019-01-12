@@ -6,87 +6,60 @@ from random import*
 
 
 
-#--------------------------------------------------------------------------------CELULA---START-----------------------------------
+class meniu(object):
 
-class celula(object):
-	
-	def __init__( self , stare , x , y , root ) :
-		
-		self.stare = stare
-		self.next_gen = stare 
-		self.x = x
-		self.y = y
-		self.photo1 = PhotoImage(file='c1.gif')
-		self.photo0 = PhotoImage(file='c0.gif')
+	def __init__( self ) :
 
-		self.t_celula = Label( root , image = self.get_poza() )
+		self.meniu_f = Tk()
 
-		self.t_celula.grid( row = x + 1 , column = y )
+		self.meniu_f.title( "Meniu")
 
+		self.meniu_f.geometry( "300x100" )
 
-	def set_stare( self , stare ) : 
+		self.p_nr_coloane = Label( self.meniu_f , text = "Nr. de coloane" )
+		self.p_nr_randuri = Label( self.meniu_f , text = "Nr. de randuri" )
 
-		self.stare = stare
+		self.r_nr_coloane = Entry( self.meniu_f )
+		self.r_nr_randuri = Entry( self.meniu_f )
 
+		self.run_button = Button( self.meniu_f , text = "Start simulation" )
 
-	def get_poza( self ) :
+		self.p_nr_coloane.grid( row = 0 , column = 0 )
+		self.p_nr_randuri.grid( row = 1 , column = 0 )
 
-		if self.stare == 1 :
-			return self.photo1
-		else :
-			return self.photo0
+		self.r_nr_coloane.grid( row = 0 , column = 1 )
+		self.r_nr_randuri.grid( row = 1 , column = 1 )
+
+		self.run_button.grid( row = 2 , column = 1 )
+
+		self.run_button["command"] = self.pre_nun_matrice
 
 
-	def get_stare( self ) :
-		
-		return self.stare
+	def pre_nun_matrice(self) :
+
+		y = self.r_nr_coloane.get()
+		x = self.r_nr_randuri.get()
+
+		self.run_matrice( x , y )
 
 
-	def set_next_gen( self , next_gen ) :
+	def run_matrice( self , a , b ) :
 
-		print("da_set_next_gen")
+		self.meniu_f.destroy()
 
-		self.next_gen = next_gen
+		self.a = int ( a ) # randuri
 
+		self.b = int( b ) # coloane
 
-	def get_next_gen( self ) :
+		dim = str( self.b * 55 + 25 ) + "x" + str( self.a * 55 + 30 )
 
-		return self.next_gen
+		root = Tk()
 
+		root.title( "generatia 0")
 
-	def c_next_gen( self ) :
+		root.geometry( dim )
 
-		print("da_c_next_gen")
-		
-		self.stare = self.next_gen
-
-		self.t_celula.destroy()
-
-		self.t_celula = Label( root , image = self.get_poza() )
-
-		self.t_celula.grid( row = self.x + 1 , column = self.y )
-
-
-	def set_x( self , x ) :
-
-		self.x = x 
-
-
-	def get_x( self ) :
-
-		return self.x
-
-
-	def set_y( self , y ) :
-
-		self.y = y
-
-
-	def get_y( self ) :
-
-		return self.y
-
-#-------------------------------------------------------------------------------CELULA---END---------------------------------------------------
+		tab1 = tabel( root , self.a , self.b )
 
 
 
@@ -141,9 +114,9 @@ class tabel(object):
 
 		self.nr_gen += 1
 
-		root.title( "generatia " + str( self.get_nr_gen() ) )
+		self.root.title( "generatia " + str( self.get_nr_gen() ) )
 
-		print ("da_run_next_gen")
+		#print ("da_run_next_gen")
 
 		for i in range( self.nr_randuri ) :
 
@@ -160,7 +133,7 @@ class tabel(object):
 
 	def next_gen( self , x , y ) :
 
-		print( "da_next_gen" + str(x) + str(y) )
+		#print( "da_next_gen" + str(x) + str(y) )
 
 		vecini = self.nr_vecini( x , y )
 
@@ -169,7 +142,7 @@ class tabel(object):
 			if vecini > 3 or vecini < 2 : 
 
 				self.matrice_celule[ self.nr_in_lista( x , y ) ].set_next_gen( 0 )
-				print( "da_next_gen__0__" + str(x) + str(y) )
+				#print( "da_next_gen__0__" + str(x) + str(y) )
 
 
 		else : 
@@ -177,7 +150,7 @@ class tabel(object):
 			if vecini == 3 :
 
 				self.matrice_celule[ self.nr_in_lista( x , y ) ].set_next_gen( 1 )
-				print( "da_next_gen__1__" + str(x) + str(y) )
+				#print( "da_next_gen__1__" + str(x) + str(y) )
 
 
 	def nr_in_lista( self , x , y ) : 
@@ -228,26 +201,99 @@ class tabel(object):
 
 
 
+#--------------------------------------------------------------------------------CELULA---START-----------------------------------
+
+class celula(object):
+	
+	def __init__( self , stare , x , y , zona_top ) :
+		
+		self.zona_top = zona_top
+		self.stare = stare
+		self.next_gen = stare 
+		self.x = x
+		self.y = y
+		self.photo1 = PhotoImage(file="c1.gif")
+		self.photo0 = PhotoImage(file="c0.gif")
+
+		self.t_celula = Label( zona_top , image = self.get_poza() )
+
+		self.t_celula.grid( row = x + 1 , column = y )
+
+
+	def set_stare( self , stare ) : 
+
+		self.stare = stare
+
+
+	def get_poza( self ) :
+
+		if self.stare == 1 :
+			return self.photo1
+		else :
+			return self.photo0
+
+
+	def get_stare( self ) :
+		
+		return self.stare
+
+
+	def set_next_gen( self , next_gen ) :
+
+		#print("da_set_next_gen")
+
+		self.next_gen = next_gen
+
+
+	def get_next_gen( self ) :
+
+		return self.next_gen
+
+
+	def c_next_gen( self ) :
+
+		#print("da_c_next_gen")
+		
+		self.stare = self.next_gen
+
+		self.t_celula.destroy()
+
+		self.t_celula = Label( self.zona_top , image = self.get_poza() )
+
+		self.t_celula.grid( row = self.x + 1 , column = self.y )
+
+
+	def set_x( self , x ) :
+
+		self.x = x 
+
+
+	def get_x( self ) :
+
+		return self.x
+
+
+	def set_y( self , y ) :
+
+		self.y = y
+
+
+	def get_y( self ) :
+
+		return self.y
+
+#-------------------------------------------------------------------------------CELULA---END---------------------------------------------------
+
+
+
 
 
 		
 # start ------------------------------------------------------------------------------- start ------------------------------------
 
-a = 10 # randuri
+meniu_1 = meniu()
 
-b = 10 # coloane
-
-dim = str( b * 55 + 25 ) + "x" + str( a * 55 + 30 )
-
-root = Tk()
-
-tab1 = tabel( root , a , b )
-
-root.title( "generatia 0")
-
-root.geometry( dim )
-
-root.mainloop()
+meniu_1.meniu_f.mainloop()
 
 
 
