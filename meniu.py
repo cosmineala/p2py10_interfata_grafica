@@ -34,10 +34,27 @@ class meniu(object): # Folosim obiectul meniu ca sa creem un meniu de setari al 
 
 	def pre_nun_matrice(self) : # citeste datele introduse si apeleaza functia de rulare
 
+		err = 0
+
 		y = self.r_nr_coloane.get()
+
 		x = self.r_nr_randuri.get()
 
-		self.run_matrice( x , y )
+		try: # verifica daca se poate face conversia din str la int
+			int( x )
+		except ValueError:
+			print( " x not a int " ) # printeza in consola faptul ca s-a introdus o valoare care nu este int
+			err = 1
+		
+		try: # verifica daca se poate face conversia din str la int
+			int( y )
+		except ValueError:
+			print( " y not a int " )
+			err = 1  # printeza in consola faptul ca s-a introdus o valoare care nu este int
+
+
+		if err == 0 : # verifica daca exista o eroare de introducere a datelor
+			self.run_matrice( x , y )
 
 
 	def run_matrice( self , a , b ) : # ruleaza simulatorul
