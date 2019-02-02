@@ -1,19 +1,27 @@
 
-from tkinter import*
+from sys import version_info
 
+if version_info[0] < 3:
+
+    from Tkinter import*
+
+else :
+
+	from tkinter import*
+	
 #from t import*
 
 class celula(object): # Acest obiect contine datele si metodele necesare celulei dar si metodele necesare afisari celulelor
 	
-	def __init__( self , stare , x , y , zona_top ) :
+	def __init__( self , stare , x , y , zona_top ,  photo0 , photo1 ) :
 		
 		self.zona_top = zona_top # calveaza zona in care se vor afisa celulele
 		self.stare = stare # salveaza stare
 		self.next_gen = stare # salveaza starea urmatoare
 		self.x = x # randuri
 		self.y = y # coloane
-		self.photo1 = PhotoImage(file="c1.gif") # salveaza textura pentru celulele vi
-		self.photo0 = PhotoImage(file="c0.gif") # salveaza textura pentru celulele moarte
+		self.photo0 = photo0 #PhotoImage(file="c1.gif") # salveaza textura pentru celulele vi        ( mod )
+		self.photo1 = photo1 #PhotoImage(file="c0.gif") # salveaza textura pentru celulele moarte	 ( mod )
 
 		self.t_celula = Label( zona_top , image = self.get_poza() ) # Creeaza celula
 

@@ -1,9 +1,7 @@
 
-# python 3.6
+# python 3.6 / 2.7
 
 # GitHub : https://github.com/cosmineala/p2py10_interfata_grafica
-
-from tkinter import*
 
 from meniu import*
 

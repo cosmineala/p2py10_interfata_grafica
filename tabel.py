@@ -1,5 +1,14 @@
 
-from tkinter import*
+from sys import version_info
+
+if version_info[0] < 3:
+
+    from Tkinter import*
+
+else :
+
+	from tkinter import*
+	
 from random import*
 
 from celula import*
@@ -11,6 +20,9 @@ class tabel(object): # Folosim obiectul tabel pentru a afisa toate celule si pen
 		self.matrice_celule = [] # Creeaza o lista in care tinem toate obiectele de tip celula
 
 		self.root = root # retinem fereastra
+
+		self.photo1 = PhotoImage(file="c1.gif") # salveaza textura pentru celulele vi ( mod )
+		self.photo0 = PhotoImage(file="c0.gif") # salveaza textura pentru celulele moarte ( mod )
 
 		self.zona_top = Frame( root ) # creem o zona in partea de sus pentru a separa celulele de butoane sau alte obicte
 		self.zona_top.pack( side = TOP ) # afisam zona
@@ -30,7 +42,7 @@ class tabel(object): # Folosim obiectul tabel pentru a afisa toate celule si pen
 
 			for j in range( self.nr_coloane ) :
 
-				self.matrice_celule.append( celula( randint( 0 , 1 ) , i , j , self.zona_top ) ) # Obiectul celula primeste parametri si este adaugat in lista
+				self.matrice_celule.append( celula( randint( 0 , 1 ) , i , j , self.zona_top , self.photo0 , self.photo1 ) ) # Obiectul celula primeste parametri si este adaugat in lista ( mod )
 
 		self.b_next_gen["command"] = self.run_next_gen # Butonul primeste o comanda cand este apasat ( mai exact sa rulexe metoda care stabileste generatia urmatoare )
 

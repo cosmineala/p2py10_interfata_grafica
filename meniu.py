@@ -1,5 +1,12 @@
+from sys import version_info
 
-from tkinter import*
+if version_info[0] < 3:
+
+    from Tkinter import*
+
+else :
+
+	from tkinter import*
 
 from tabel import*
 
